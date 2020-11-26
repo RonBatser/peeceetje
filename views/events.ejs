@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <% this.title = 'Evenementen' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% this.activeNavItem = 'events' %>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<main class="mb-x" id="facebook-events">
+    <% include fragments/current-and-archived-events.ejs %>
+</main>
+
+<% /* Event article template */ %>
+<% include templates/event-article-template.ejs %>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+
+</body>
+</html>

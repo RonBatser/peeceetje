@@ -1,0 +1,52 @@
+<div class="modal fade" id="modal-apply-order" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form id="form-order" class="modal-content" method="post" action="/api/order">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title">
+                    <i class="fa fa-check-circle"></i> Bestelling afronden
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <label>
+                    <input type="checkbox" id="toggleCamera"> Toggle Camera
+                </label>
+                <div class="ajax-holder">
+                    <div class="ajax-cover text-info">
+                        <i class="fa fa-3x fa-spinner fa-spin"></i>
+                    </div>
+                    <div id="loadingMessage">
+                        <i class="fa fa-fw fa-exclamation-triangle"></i> Geen toegang tot uw camera.
+                    </div>
+                    <div id="video"></div>
+                </div>
+                <div id="output" class="alert alert-info mt-1 mb-1" hidden>
+                    <div id="outputMessage">
+                        <i class="fa fa-fw fa-info-circle"></i> Geen QR-code gedetecteerd.
+                    </div>
+                    <button hidden type="button" id="reset-qrscanner-button" class="btn btn-sm btn-dark">
+                        <i class="fa fa-fw fa-qrcode"></i> Opnieuw
+                    </button>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label for="outputData" class="input-group-text"><i
+                                    class="fa fa-fw fa-user"></i></label>
+                    </div>
+                    <input id="outputData" type="text" name="username" class="form-control"
+                           placeholder="Gebruikersnaam" autocomplete="off">
+                    <input type="hidden" id="user-credits" name="userCredits">
+                    <div class="input-group-append">
+                        <button type="submit" id="finalize-order-button"
+                                class="btn btn-success finalize-order-button" disabled>
+                            <i class="fa fa-fw fa-exclamation-circle"></i> Afronden
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

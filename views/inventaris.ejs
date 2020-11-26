@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <% this.title = 'Inventaris' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% this.activeNavItem = 'inventaris' %>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<main class="container mb-x">
+    <form method="post" id="form-inventory" action="/Inventaris">
+        <fieldset>
+            <legend><i class="fa fa-calculator"></i> Inventaris</legend>
+
+            <div class="toolbar">
+                <button type="submit" class="btn btn-info"><i class="fa fa-fw fa-save"></i> Opslaan</button>
+                <a href="#" role="button" class="btn btn-sm btn-success new-entity-button">
+                    <i class="fa fa-fw fa-plus-circle"></i> Nieuw product</a>
+            </div>
+
+            <div class="filter-and-sorting mt-2 mb-2">
+                <a href="#" role="button" class="btn btn-primary toggle-toolbar-button" data-toggle="slide-toggle"
+                   data-target="#form-filter-and-sorting">
+                    <i class="fa fa-fw fa-chevron-down"></i> Sorteren
+                </a>
+                <div id="form-filter-and-sorting" class="toolbar members-filter-and-sorting">
+                    <hr>
+                    <div class="form-group">
+                        <label class="control-label">Sorteren op:
+                            <select id="sort-by" title="Sorteren op" class="form-control form-control-sm d-inline" data-target=".table-products">
+                                <option value="name-asc" data-target=".name" data-type="string" data-order="asc" selected>▲ Productnaam (oplopend)</option>
+                                <option value="name-desc" data-target=".name" data-type="string" data-order="desc">▼ Productnaam (aflopend)</option>
+                                <option value="count-asc" data-target=".product-count" data-type="int" data-holder="input" data-order="asc">▲ Aantal (oplopend)</option>
+                                <option value="count-desc" data-target=".product-count" data-type="int" data-holder="input" data-order="desc">▼ Aantal (aflopend)</option>
+                                <option value="price-asc" data-target=".product-price" data-type="float" data-holder="input" data-order="asc">▲ Prijs (oplopend)</option>
+                                <option value="price-desc" data-target=".product-price" data-type="float" data-holder="input" data-order="desc">▼ Prijs (aflopend)</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <hr>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover table-bordered align-middle table-products">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Productnaam</th>
+                        <th class="text-center">Laatst besteld</th>
+                        <th class="text-center">Aantal</th>
+                        <th class="text-center price-cell">Prijs
+                            <small class="text-info">(EUR)</small>
+                        </th>
+                        <th class="text-center">Credits (gewicht)</th>
+                        <th class="text-center">Credits (verkoop)</th>
+                        <th class="text-center action-cell">Actie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% if (locals.inventaris && inventaris.length > 0) { %>
+                        <% for (var i = 0 ; i < inventaris.length ; i++ ) { %>
+                            <%
+                                let product = inventaris[i];
+                                let lastOrderDate = product.laatstBesteld;
+                                let formattedOrderDate = tools.formattedDatetimeDate(lastOrderDate);
+                                let formattedShortOrderDate = tools.formattedShortDate(lastOrderDate);
+                                let price = parseFloat(product.prijs);
+                                let euros = ~~(price);
+                                let cents = ~~((Math.round((price - euros) * 100) / 100) * 100);
+                            %>
+                            <tr class="entity">
+                                <th class="first-word-capitalize">
+                                    <input type="hidden" name="id[]" value="<%= product.idProduct %>">
+                                    <span class="name"><%= product.productnaam %></span>
+                                </th>
+                                <td class="text-center date-cell">
+                                    <time class="badge badge-info last-order-date" datetime="<%= formattedOrderDate %>"
+                                          data-datetime="<%= lastOrderDate.getTime() %>"><%= formattedShortOrderDate %></time>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm product-count" name="count[]"
+                                           value="<%= product.Aantal %>"
+                                           placeholder="Aantal">
+                                </td>
+                                <td class="text-center">
+                                    <div class="input-group input-group-sm price-group d-inline-flex">
+                                        <input type="hidden" name="price[]" class="product-price" value="<%= product.prijs %>">
+                                        <input type="number" class="form-control euros" name="euro[]"
+                                               value="<%= euros %>"
+                                               placeholder="Prijs" min="0">
+                                        <div class="input-group-prepend input-group-append">
+                                            <span class="input-group-text price-delimiter">,</span>
+                                        </div>
+                                        <input type="number" class="form-control cents" name="cent[]"
+                                               value="<%= cents %>"
+                                               placeholder="Prijs" min="0" maxlength="2">
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm product-credits" name="credits[]"
+                                           value="<%= product.punten %>"
+                                           placeholder="Credits" min="0">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm product-credits" name="cost-in-credits[]"
+                                           value="<%= product.prijsinpunten %>"
+                                           placeholder="Credits" min="0">
+                                </td>
+                                <td class="action-cell">
+                                    <a href="#" role="button" class="btn btn-sm btn-danger delete-button"
+                                       data-toggle="modal" title="Verwijderen" data-target="#modal-delete-product">
+                                        <i class="fa fa-fw fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                    <tr class="action-row">
+                        <td colspan="7">
+                            <a href="#" role="button" class="btn btn-sm btn-success new-entity-button">
+                                <i class="fa fa-fw fa-plus-circle"></i> Nieuw</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+        <hr>
+        <div class="toolbar">
+            <button type="submit" class="btn btn-info"><i class="fa fa-fw fa-save"></i> Opslaan</button>
+        </div>
+    </form>
+
+    <% /* New product Template */ %>
+    <% include templates/inventory-new-product-template.ejs %>
+    <% include templates/inventory-delete-product-button-template.ejs %>
+
+    <% /* Modal Delete Product */ %>
+    <% include fragments/inventory/inventory-delete-product-modal.ejs %>
+</main>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+</body>
+
+</html>

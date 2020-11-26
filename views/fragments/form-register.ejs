@@ -1,0 +1,96 @@
+<form action="/Register" method="post">
+    <fieldset>
+        <div class="form-row">
+            <div class="col">
+                <label for="new-username" class="badge badge-pctje">Gebruikersnaam</label>
+                <input type="text" id="new-username" name="username"
+                       class="form-control"
+                       placeholder="Gebruikersnaam" required="required">
+            </div>
+        </div>
+
+        <br>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="firstname" class="badge badge-pctje">Voornaam</label>
+                <input type="text" id="firstname" name="firstname"
+                       class="form-control"
+                       placeholder="Voornaam" required="required">
+            </div>
+        </div>
+
+        <br>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="lastname" class="badge badge-pctje">Familienaam</label>
+                <input type="text" id="lastname" name="lastname"
+                       class="form-control"
+                       placeholder="Familienaam" required="required">
+            </div>
+        </div>
+
+        <br>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="birthdate-day" class="badge badge-pctje">Geboortedatum</label>
+                <%
+                let thisYear = new Date().getFullYear();
+                let minAge = 11; // TODO replace to settings.json or to database
+                let maxAge = 40;
+                %>
+                <div class="input-group date-group">
+                    <select id="birthdate-day" name="day" class="form-control date-group-day" title="Dag"
+                            required="required">
+                        <option value="">(Dag)</option>
+                        <% for(let i = 1; i <= 31; i++) { %>
+                            <option value="<%= i %>"><%= i %></option>
+                        <% } %>
+                    </select>
+                    <select name="month" class="form-control date-group-month" title="Maand" required="required">
+                        <option value="">(Maand)</option>
+                        <% for(let i = 0; i < tools.monthNames.length; i++) { %>
+                            <option value="<%= i + 1 %>"><%= tools.monthNames[i] %></option>
+                        <% } %>
+                    </select>
+                    <select name="year" class="form-control date-group-year" title="Jaar" required="required">
+                        <option value="">(Jaar)</option>
+                        <% for(let i = thisYear - maxAge - 1 ; i <= thisYear - minAge; i++) { %>
+                            <option value="<%= i %>"><%= i %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="new-password" class="badge badge-pctje">Wachtwoord</label>
+                <input type="password" id="new-password" name="password" placeholder="Wachtwoord" required="required"
+                       class="form-control">
+            </div>
+        </div>
+
+        <hr>
+
+        <label>
+            <input type="checkbox" class="checkbox" name="accept" required>
+            Ik heb het <a href="#" role="button" data-toggle="modal" data-target="#modal-privacy-statement">Privacy
+                beleid</a> gelezen en ga hiermee akkoord.
+        </label>
+
+        <hr>
+
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-fw fa-check-circle"></i> Registreren
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>

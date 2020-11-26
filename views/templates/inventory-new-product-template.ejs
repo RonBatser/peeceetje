@@ -1,0 +1,38 @@
+<table hidden>
+    <tr id="new-entity-template">
+        <th class="first-word-capitalize">
+            <input type="hidden" name="id[]" value="new-{id}">
+            <input type="text" name="name[]" class="form-control form-control-sm" placeholder="Naam"
+                   required="required" data-focus></th>
+        <td class="text-center date-cell"></td>
+        <td>
+            <input type="number" class="form-control form-control-sm product-count" name="count[]" value="0"
+                   placeholder="Aantal" min="0">
+        </td>
+        <td class="text-center">
+            <div class="input-group input-group-sm price-group d-inline-flex">
+                <input type="hidden" name="price[]" class="product-price">
+                <input type="number" class="form-control euros" name="euro[]" value="0" placeholder="Prijs" min="0">
+                <div class="input-group-prepend input-group-append">
+                    <span class="input-group-text price-delimiter">,</span>
+                </div>
+                <input type="number" class="form-control cents" name="cent[]" value="0" placeholder="Prijs" min="0"
+                       maxlength="2">
+            </div>
+        </td>
+        <td>
+            <input type="number" class="form-control form-control-sm product-credits" name="credits[]"
+                   value="0"
+                   placeholder="Credits" min="0">
+        </td>
+        <td>
+            <input type="number" class="form-control form-control-sm product-credits" name="cost-in-credits[]"
+                   value="0"
+                   placeholder="Credits" min="0">
+        </td>
+        <td class="action-cell">
+            <a href="#" role="button" class="btn btn-sm btn-warning clear-closest" data-target="tr">
+                <i class="fa fa-fw fa-minus-circle"></i></a>
+        </td>
+    </tr>
+</table>

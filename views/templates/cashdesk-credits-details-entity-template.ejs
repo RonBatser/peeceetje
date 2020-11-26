@@ -1,0 +1,36 @@
+<table hidden>
+    <tr id="credits-details-entity-template" class="entity" draggable="true">
+        <td class="td-w-115">
+            <input type="hidden" name="id[]">
+            <input type="hidden" name="cost-in-credits[]">
+            <div class="input-group number-group">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-xs btn-primary decrement-button">
+                        <i class="fa fa-fw fa-chevron-down"></i>
+                    </button>
+                </div>
+                <input type="number" name="count[]" class="form-control form-control-xs number-field" min="1"
+                       title="Aantal" required>
+                <div class="input-group-append">
+                    <button class="btn btn-xs btn-primary increment-button">
+                        <i class="fa fa-fw fa-chevron-up"></i>
+                    </button>
+                </div>
+            </div>
+        </td>
+        <td class="name td-min-w-150">Onbekend</td>
+        <td class="text-right">
+            <input type="hidden" name="price[]">
+            <input type="hidden" name="cost-in-credits[]">
+            <span class="badge badge-dark text-mono credits">0</span>
+        </td>
+        <td class="td-w-85">
+            <a href="#" role="button" class="btn btn-sm btn-danger clear-closest" data-target="tr"
+               data-trigger="change" data-trigger-target=".table-credits">
+                <i class="fa fa-fw fa-trash"></i></a>
+            <a href="#" role="button" class="btn btn-sm btn-info move-to-credits"
+               data-toggle="move-one-product" data-target=".table-cart">
+                <i class="fa fa-fw fa-shopping-cart"></i></a>
+        </td>
+    </tr>
+</table>

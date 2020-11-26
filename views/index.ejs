@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <% this.title = 'Welkom' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% this.activeNavItem = 'home' %>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<div class="container bg-light">
+    <section>
+        <h1><em>Hoi, <%= username %>!</em></h1>
+    </section>
+</div>
+
+<% if (locals.qr) { %>
+    <div class="thumbnail qr-code mb-x mt-3">
+        <figure>
+            <img src="<%= qr %>" alt="QR-Code">
+        </figure>
+    </div>
+<% } %>
+
+<% if (locals.saldo) { %>
+<div class="text-center">
+    <h2>
+        <span class="badge badge-success">
+            <span class="credits"><%= saldo %></span>
+            <small>credits</small>
+        </span>
+
+    </h2>
+</div>
+<% } %>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+</body>
+
+</html>

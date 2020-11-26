@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="author" content="PP4 Pro Team"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<link rel="shortcut icon" href="./favicon.ico"/>
+<link rel="manifest" href="manifest.json">
+<link rel='stylesheet' href='assets/stylesheets/reset.css'/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous">
+<link rel='stylesheet' href='assets/stylesheets/style.css'/>
+
+<title>Jeugdhuis Peecee'tje</title>
+
+<body>
+<header>
+    <div class="flip-wrapper mr-auto ml-auto">
+        <div class="flip-core">
+            <div class="flip-front">
+                <div class="flip-front-logo"></div>
+            </div>
+            <div class="flip-back">
+                <figure class="flip-back-logo">
+                    <img alt="Logo photo" src="./assets/media/logo/logo_img.gif">
+                </figure>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="./index.html">
+                <img alt="Logo" src="assets/media/logo/logo.svg">
+            </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-2x fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="nav-item nav-link active" href="./index.html">Home</a>
+
+            <a class="nav-item nav-link" href="./details/app.html">App</a>
+
+            <a class="nav-item nav-link" href="./details/membership.html">Lid Worden</a>
+
+            <a class="nav-item nav-link" href="./details/contact.html">Contact</a>
+
+            <a class="nav-item nav-link" href="./details/about.html">Over ons</a>
+        </div>
+    </nav>
+
+    <main class="container mb-x">
+        <div class="card bg-yellow" id="description">
+
+      </div>
+
+
+        <main class="mb-x card bg-white" id="facebook-events">
+                <section class="container current-events">
+                        <h1><i class="fa fa-calendar-alt"></i> Geplande evenementen</h1>
+                        <div class="events">
+                            <div class="before-fetch">
+                                <i class="fa fa-spinner fa-spin"></i> Even geduld a.u.b.
+                            </div>
+                            <div hidden class="no-events">
+                                &ndash; Geen evenementen gevonden
+                            </div>
+                        </div>
+                    </section>
+
+        <section class="container archived-events mt-3">
+            <h1 class="text-secondary"><i class="far fa-calendar-alt"></i> Afgelopen evenementen</h1>
+            <div class="events">
+                <div class="before-fetch">
+                    <i class="fa fa-spinner fa-spin"></i> Even geduld a.u.b.
+                </div>
+                <div hidden class="no-events">
+                    &ndash; Geen evenementen gevonden
+                </div>
+            </div>
+        </section>
+    </main>
+
+            <article hidden id="event-template" class="event">
+                    <div class="event-date"></div>
+                    <div class="detail expandable-parent">
+                        <h2>
+                            <a href="https://www.facebook.com/events/" class="title" target="_blank">
+                                <i class="fab fa-facebook"></i>
+                                <span class="name">Evenement</span>
+                            </a>
+                        </h2>
+                        <div class="detail-text expandable"></div>
+                        <a hidden href="#" class="show-more-button" role="button">
+                            <i class="fa fa-chevron-down"></i> Meer...</a>
+                        <a hidden href="#" class="show-less-button" role="button">
+                            <i class="fa fa-chevron-up"></i> Minder...</a>
+                    </div>
+                </article>
+    </main>
+
+<footer>
+
+    <a href="./details/AdminLogin.html">Admin</a>
+
+</footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script src="assets/js/events.js"></script>
+<script src="assets/js/index.js"></script>
+
+
+</body>
+
+</html>

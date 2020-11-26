@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <% this.title = 'Applicatie instellingen' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% this.activeNavItem = 'appsettings' %>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<main class="container mb-x">
+        <form method="post" id="form-change-token" action="/token" class="custom-submit mb-5" autocomplete="off">
+            <fieldset>
+                <legend><i class="fab fa-facebook"></i> Facebook token</legend>
+    
+                <div class="form-row">
+                    <div class="col-sm-3 flex-label">
+                        <label for="new-password" class="badge badge-primary">Huidige Token:</label>
+                    </div>
+                    <div class="col-sm-9 text-wrap">
+                        <%= token %>
+                    </div>
+                </div>
+                <br>
+            </fieldset>
+            <hr>
+            <fieldset>
+                <div class="form-row">
+                    <div class="col-sm-3 flex-label">
+                        <label for="new-password" class="badge badge-primary">Nieuwe Token:</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" id="token" name="token" class="form-control" required="required"
+                               placeholder="Nieuwe token">
+                    </div>
+                </div>
+                <br>
+                <div class="toolbar text-right">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-fw fa-save"></i> Token opslaan
+                    </button>
+                </div>
+            </fieldset>
+            
+        </form>
+        
+        <h4><i class="fab fa-youtube"></i> Instructievideo Facebooktokens</h4>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/BQhwb2p4FXY" allowfullscreen></iframe>
+        </div>
+</main>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+
+</body>
+</html>

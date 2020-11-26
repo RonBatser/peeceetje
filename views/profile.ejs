@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <% this.title = 'Accountinstellingen' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% this.activeNavItem = 'profile' %>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<article class="container mb-x">
+    <h2><i class="fa fa-user"></i> <%= currentUser.username %></h2>
+    <hr>
+    <% if (locals.message) { %>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <% if (locals.message) { %>
+                <%= message %>
+            <% } %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="fa fa-chevron-up"></i>
+            </button>
+        </div>
+    <hr>
+    <% } %>
+    <% if (locals.currentUser) { %>
+        <div class="form-row">
+            <div class="col-sm-3 flex-label">
+                <label for="new-password" class="text-uppercase"><strong>Naam:</strong></label>
+            </div>
+            <div class="col-sm-9"><%= currentUser.firstname + " " + currentUser.lastname %></div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-sm-3 flex-label">
+                <label for="new-password" class="text-uppercase"><strong>Geboortedatum:</strong></label>
+            </div>
+            <div class="col-sm-9">
+                <time datetime="<%= tools.formattedDatetimeDate(currentUser.birthdate) %>"><%= tools.formattedDate(currentUser.birthdate) %></time>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-sm-3 flex-label">
+                <label for="new-password" class="text-uppercase"><strong>Gespaarde punten:</strong></label>
+            </div>
+            <div class="col-sm-9"><span class="badge badge-md badge-<% if (currentUser.punten === 0) { %>secondary<% } else { %>success<% } %>"><%= currentUser.points %></span></div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-sm-3 flex-label">
+                <label for="new-password" class="text-uppercase"><strong>Aantal bezoeken:</strong></label>
+            </div>
+            <div class="col-sm-9">
+                <span class="badge badge-md badge-<% if (currentUser.numberOfVisits === 0) { %>secondary<% } else { %>success<% } %>"><%= currentUser.numberOfVisits %></span>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-sm-3 flex-label">
+                <label for="new-password" class="text-uppercase"><strong>Rol:</strong></label>
+            </div>
+            <div class="col-sm-9">
+                <% if (currentUser.role === 'admin') { %>
+                    <i class="fa fa-cog"></i>
+                <% } else if (currentUser.role === 'barman') { %>
+                    <i class="fas fa-wine-bottle"></i>
+                <% } else if (currentUser.role === 'gebruiker') { %>
+                    <i class="fa fa-user"></i>
+                <% } else { %>
+                    <i class="fa fa-question text-danger"></i>
+                <% } %>
+                <span class="text-capitalize"><%= currentUser.role %></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <a href="/changePassword" role="button" class="btn btn-sm btn-primary">
+            <i class="fas fa-key"></i> Wachtwoord wijzigen</a>
+        <a href="#" role="button" class="btn btn-sm btn-danger delete-button"
+           data-toggle="modal" data-target="#modal-delete-account">
+            <i class="fa fa-fw fa-user-minus"></i> Account verwijderen</a>
+
+        <div class="modal fade dynamic-modal" id="modal-delete-account" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="post" class="modal-content" action="/DeleteUser">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title">
+                            <i class="fa fa-user-minus"></i> Account verwijderen
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Hiermee verwijdert u uw account. Deze actie is onomkeerbaar.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">
+                            <i class="fa fa-fw fa-times-circle"></i> Annuleren
+                        </button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-fw fa-user-minus"></i> Account verwijderen
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    <% } %>
+</article>
+
+<% include fragments/footer-with-tag.ejs %>
+<% include fragments/tail.ejs %>
+</body>
+</html>

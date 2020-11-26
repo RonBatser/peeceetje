@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <% this.title = 'Kassa' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body class="cashdesk">
+<div class="desk">
+    <aside id="cart" class="details">
+        <div class="fixed-container">
+            <div class="details-header mb-2">
+                <a href="/" role="button" class="button btn-dark circle">
+                    <i class="fa fa-home"></i>
+                </a>
+                <a hidden href="#" role="button" class="button circle btn-danger show-cached-orders-button"
+                   data-toggle="modal"
+                   data-target="#modal-orders-cache" title="Cache">
+                    <i class="fa fa-hdd"></i>
+                </a>
+                <h3>
+                <span class="text-secondary">
+                    <i class="fa fa-cash-register"></i> Kassa
+                </span>
+                    <small class="text-info">Barman: <strong class="text-danger">
+                            <% if(locals.currentUser) { %>
+                                <%= currentUser.username %>
+                            <% } %>
+                        </strong>
+                    </small>
+                </h3>
+            </div>
+            <div class="details-body">
+                <div class="text-right cart-toolbar">
+                    <a hidden href="#" role="button" class="btn btn-sm btn-danger clear-cart-button hidable">
+                        <i class="fa fa-fw fa-trash"></i> Leegmaken</a>
+                    <a hidden href="#" role="button" class="btn btn-warning hidable apply-order-button"
+                       data-toggle="modal"
+                       data-target="#modal-apply-order">
+                        <i class="fa fa-fw fa-qrcode"></i> Afronden...</a>
+                    <a href="#" role="button" class="btn btn-primary show-cart-details-button"
+                       data-toggle="modal" data-target="#modal-cart-details">
+                        <i class="fa fa-fw fa-shopping-cart"></i>
+                        <span class="not-md">Details</span></a>
+                </div>
+
+                <div class="alerts mt-2">
+                    <div class="alert alert-success alert-dismissible fade show order-success hidden"
+                         role="alert">
+                        <i class="fa fa-check-circle"></i>
+                        De order is succesvol afgerond.
+                        <button type="button" class="close">
+                            <i class="fa fa-chevron-up"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <% /* Cart-details */ %>
+                <div class="details-part cart-details">
+                    <h5 class="text-info not-md"><i class="fa fa-fw fa-shopping-cart"></i> Verkoop</h5>
+                    <div class="grand-total-row grand-total-row-cart bg-info text-light">
+                        <div class="products-count">
+                            <span class="badge badge-light badge-md grand-count">0</span> product(en)
+                        </div>
+                        <div class="badge badge-light badge-md grand-total-price">
+                            <span class="price">0,00</span>
+                            <small>EUR</small>
+                        </div>
+                    </div>
+
+                    <div id="table-cart-wrapper">
+                        <div class="table-cart-body">
+                            <div class="grand-total-row grand-total-row-cart bg-info text-light">
+                                <div class="products-count">
+                                    <span class="badge badge-light badge-md grand-count">0</span> product(en)
+                                </div>
+                                <div class="badge badge-light badge-md grand-total-price">
+                                    <span class="price">0,00</span>
+                                    <small>EUR</small>
+                                </div>
+                            </div>
+                            <div class="table-responsive orderline-container table-cart-container bg-info droppable"
+                                 data-container-class="table-cart">
+                                <div class="table-responsive-icon"><i class="fa fa-cocktail"></i></div>
+                                <table class="table table-sm table-hover table-cart align-middle table-light"
+                                       data-template="#cart-details-entity-template">
+                                    <tbody>
+                                    <tr hidden class="empty">
+                                        <td colspan="4"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="not-md">
+
+                <% /* Credits-details */ %>
+                <div class="details-part credits-details">
+                    <h5 class="text-success not-md"><i class="fa fa-fw fa-gift"></i> Credits</h5>
+                    <div id="grand-total-row-credits" class="grand-total-row grand-total-row-credits bg-success text-light">
+                        <div class="products-count">
+                            <span class="badge badge-light badge-md grand-count">0</span> product(en)
+                        </div>
+                        <a href="#" class="badge badge-light badge-md grand-total-credits"
+                           data-toggle="modal" data-target="#modal-user-info">
+                            <i class="fa fa-info-circle"></i>
+                            <span class="credits">0</span>
+                            <small>credits</small>
+                        </a>
+                    </div>
+
+                    <div id="table-credits-wrapper">
+                        <div class="table-credits-body">
+                            <div class="grand-total-row grand-total-row-credits bg-success text-light">
+                                <div class="products-count">
+                                    <span class="badge badge-light badge-md grand-count">0</span> product(en)
+                                </div>
+                                <div class="badge badge-light badge-md grand-total-credits">
+                                    <span class="credits">0</span>
+                                    <small>credits</small>
+                                </div>
+                            </div>
+                            <div class="table-responsive orderline-container table-credits-container bg-success droppable"
+                                 data-container-class="table-credits">
+                                <div class="table-responsive-icon"><i class="fa fa-gift"></i></div>
+                                <table class="table table-sm table-hover table-credits align-middle table-light"
+                                       data-template="#credits-details-entity-template">
+                                    <tbody>
+                                    <tr hidden class="empty">
+                                        <td colspan="4"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="pctje-wrapper">
+                    <figure>
+                        <img alt="Logo and name" src="/assets/media/logo/logo.svg">
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <% /* Modal Cart Details */ %>
+        <% include fragments/cashdesk/cashdesk-cart-details-modal.ejs %>
+    </aside>
+
+    <main class="products">
+        <% if (locals.products && products.length > 0) { %>
+            <ul class="product-list">
+                <% for (var i = 0 ; i < products.length ; i++ ) { %>
+                    <%
+                        let product = products[i];
+                        let productname = product.productnaam[0].toUpperCase();
+                        if (product.productnaam.length > 1) {
+                            productname += product.productnaam.substring(1)
+                        }
+                        let price = Math.round(parseFloat(product.prijs) * 100) / 100;
+                        let formattedPrice = price.toFixed(2).replace(".", ",");
+                    %>
+                    <li class="product" data-id="<%= product.idProduct %>" draggable="true">
+                        <input type="hidden" name="id[]" value="<%= product.idProduct %>"
+                               data-value-to-value="input[type=hidden][name=id]">
+                        <input type="hidden" name="price[]" value="<%= price %>">
+                        <input type="hidden" name="cost-in-credits[]" value="<%= product.prijsinpunten %>">
+                        <a href="#" class="product-button product-to-cart-button" role="button">
+                            <span class="info name"><%= productname %></span>
+                        </a>
+                        <hr class="m-0">
+                        <div class="toolbar cashdesk-product-toolbar">
+                            <div class="btn-group" role="group">
+                                <a href="#" class="btn btn-sm btn-info price product-to-cart-button">
+                                    <small>&euro;</small> <%= formattedPrice %></a>
+                                <a href="#" class="btn btn-sm btn-dark product-count show-numpad-button"
+                                   data-toggle="modal"
+                                   data-target="#modal-numpad">
+                                    <i class="fa fa-fw fa-calculator"></i>
+                                    <span class="count" data-html-to-html=".count">1</span></a>
+                                <a href="#"
+                                   class="btn btn-sm btn-success credits product-to-credits-button"><%= product.prijsinpunten %>
+                                    <small>cdt.</small>
+                                </a>
+                            </div>
+
+                        </div>
+                    </li>
+                <% } %>
+            </ul>
+        <% } %>
+
+        <% /* Cart-Details Entity template */ %>
+        <% include templates/cashdesk-cart-details-entity-template.ejs %>
+
+        <% /* Credits-Details Entity template */ %>
+        <% include templates/cashdesk-credits-details-entity-template.ejs %>
+
+        <% /* Modal Delete Product */ %>
+        <% include fragments/cashdesk/cashdesk-delete-product-modal.ejs %>
+
+        <% /* Modal Apply Order */ %>
+        <% include fragments/cashdesk/cashdesk-apply-order-modal.ejs %>
+
+        <% /* Modal User Credits */ %>
+        <% include fragments/cashdesk/cashdesk-user-credits-modal.ejs %>
+
+    </main>
+</div>
+<% include fragments/tail.ejs %>
+<script src="/assets/3pty/jsQR.js"></script>
+
+</body>
+
+</html>

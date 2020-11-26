@@ -1,0 +1,58 @@
+<div class="modal fade modal-numpad" id="modal-numpad" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title">
+                    <i class="fa fa-calculator"></i> Aantal
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="id">
+                <div class="display count initial">0</div>
+                <div class="form-row numpad-row">
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-7">7</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-8">8</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-9">9</button>
+                </div>
+                <div class="form-row numpad-row">
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-4">4</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-5">5</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-6">6</button>
+                </div>
+                <div class="form-row numpad-row">
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-1">1</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-2">2</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-3">3</button>
+                </div>
+                <div class="form-row numpad-row">
+                    <button type="button" class="btn btn-xl btn-fw btn-dark value-button button-0">0</button>
+                    <button type="button" class="btn btn-xl btn-fw btn-dark backspace-button">
+                        <i class="fa fa-long-arrow-alt-left"></i>
+                    </button>
+                    <button type="button" class="btn btn-xl btn-fw btn-danger clear-button">C</button>
+                </div>
+                <div class="form-row numpad-row">
+                    <button type="button" class="btn btn-xl btn-fw btn-icon-text btn-warning save-button">
+                        <i class="fa fa-save"></i>
+                        <span class="label">Opslaan (O)</span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-xl btn-fw btn-icon-text btn-success apply-button apply-credits-button"
+                            data-target=".table-credits">
+                        <i class="fa fa-gift"></i>
+                        <span class="label">Credits (K)</span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-xl btn-fw btn-icon-text btn-info apply-button apply-cart-button"
+                            data-target=".table-cart">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="label">Verkoop (V)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

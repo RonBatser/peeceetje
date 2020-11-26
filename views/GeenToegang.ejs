@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <% this.title = 'Geen toegang' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<div class="container bg-light">
+    <section>
+        <h1>U hebt geen toegang tot dit onderdeel.</h1>
+    </section>
+</div>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+</body>

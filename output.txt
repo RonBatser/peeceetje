@@ -1,0 +1,4 @@
+
+> peeceetje@0.0.0 start /home/peecee1q/app.peeceetje.be
+> node ./bin/www
+

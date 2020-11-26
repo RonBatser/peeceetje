@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <% this.title = 'Aanmelden/Registreren' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body class="blue">
+<header class="auth-header">
+    <% include fragments/fliplogo.ejs %>
+</header>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a target="_blank" href="http://peeceetje.be">ga naar de website</a>
+    <a href="#" id="btnAdd" style="display:none">installeer de app</a>
+</nav>
+<div class="container mt-2">
+    <main class="login-pane mb-x cf">
+        <div class="pctje-wrapper position-top-right-3px">
+            <figure>
+                <img alt="Logo and name" src="/assets/media/logo/logo.svg">
+                <figcaption>
+                    <strong>
+                        PEECEE'tje&reg;
+                    </strong>
+                    <br>
+                    <small>jeugdhuis</small>
+                </figcaption>
+            </figure>
+
+        </div>
+        
+        <nav>
+            <ul class="nav nav-pills" id="nav-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab"
+                       aria-controls="nav-login" aria-selected="true">
+                        <i class="fa fa-fw fa-user"></i> Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" id="nav-register-tab" data-toggle="tab" href="#nav-register" role="tab"
+                       aria-controls="nav-register" aria-selected="false">
+                        <i class="fa fa-fw fa-asterisk"></i> Registratie</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="tab-content col" id="tab-auth">
+            <div class="tab-pane mt-3 fade show active" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
+                <% include fragments/form-login.ejs %>
+            </div>
+
+            <div class="tab-pane mt-3 fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+                <% include fragments/form-register.ejs %>
+
+                <div class="modal fade" id="modal-privacy-statement" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <section class="modal-content">
+                            <div class="modal-header bg-dark">
+                                <h5 class="modal-title">
+                                    <i class="fa fa-gavel"></i> Privacy beleid
+                                </h5>
+                            </div>
+                            <div class="modal-body">
+                                <% include fragments/privacy-statement.ejs %>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-dark" data-dismiss="modal" aria-label="Close">
+                                    Sluiten
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+</body>
+
+</html>

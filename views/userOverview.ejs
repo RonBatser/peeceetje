@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <% this.title = 'Leden' %>
+    <% include fragments/head.ejs %>
+</head>
+
+<body>
+<header>
+    <% this.activeNavItem = 'members' %>
+    <% include fragments/nav.ejs %>
+</header>
+
+<% include fragments/aside-secondary.ejs %>
+
+<article class="container mb-x">
+    <h2><i class="fa fa-user-friends"></i> Leden</h2>
+    <div class="filter-and-sorting">
+        <a href="#" role="button" class="btn btn-primary toggle-toolbar-button" data-toggle="slide-toggle"
+           data-target="#form-filter-and-sorting">
+            <i class="fa fa-fw fa-chevron-down"></i> Verfijnen
+        </a>
+        <form id="form-filter-and-sorting" class="toolbar members-filter-and-sorting">
+            <hr>
+            <div class="form-row">
+                <label class="col-sm-6">Voornaam of gebruikersnaam:
+                    <input type="text" class="form-control form-control-sm d-inline-block" name="username-or-firstname"
+                           placeholder="Voornaam">
+                </label>
+                <label class="col-sm-6">Familienaam:
+                    <input type="text" class="form-control form-control-sm d-inline-block" name="surname"
+                           placeholder="Familienaam">
+                </label>
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-sm btn-dark d-inline-block reset-button">
+                        <i class="fa fa-fw fa-undo"></i> Reset
+                    </button>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <label class="control-label">Sorteren op:
+                    <select id="sort-by" title="Sorteren op" class="form-control form-control-sm d-inline" data-target=".table-users">
+                        <option value="default" data-type="int" data-holder="order">-</option>
+                        <option value="username-asc" data-target=".username" data-type="string" data-order="asc">▲ Gebruikersnaam (oplopend)</option>
+                        <option value="username-desc" data-target=".username" data-type="string" data-order="desc">▼ Gebruikersnaam (aflopend)</option>
+                        <option value="firstname-asc" data-target=".firstname" data-type="string" data-order="asc">▲ Voornaam (oplopend)</option>
+                        <option value="firstname-desc" data-target=".firstname" data-type="string" data-order="desc">▼ Voornaam (aflopend)</option>
+                        <option value="surname-asc" data-target=".surname" data-type="string" data-order="asc">▲ Familienaam (oplopend)</option>
+                        <option value="surname-desc" data-target=".surname" data-type="string" data-order="desc">▼ Familienaam (aflopend)</option>
+                        <option value="birthdate-asc" data-target=".user-birth-date" data-type="date" data-order="asc" data-holder="time">▲ Geboortedatum (oplopend)</option>
+                        <option value="birthdate-desc" data-target=".user-birth-date" data-type="date" data-order="desc" data-holder="time">▼ Geboortedatum (aflopend)</option>
+                        <option value="points-asc" data-target=".points" data-type="int" data-order="asc">▲ Punten (oplopend)</option>
+                        <option value="points-desc" data-target=".points" data-type="int" data-order="desc">▼ Punten (aflopend)</option>
+                        <option value="last-active-asc" data-target=".last-active" data-type="date" data-order="asc" data-holder="time">▲ Laatst online (oplopend)</option>
+                        <option value="last-active-desc" data-target=".last-active" data-type="date" data-order="desc" data-holder="time">▼ Laatst online (aflopend)</option>
+                        <option value="visits-asc" data-target=".visits" data-type="int" data-order="asc">▲ Aantal bezoeken (oplopend)</option>
+                        <option value="visits-desc" data-target=".visits" data-type="int" data-order="desc">▼ Aantal bezoeken (aflopend)</option>
+                    </select>
+                </label>
+            </div>
+
+            <hr>
+        </form>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <table class="table table-sm table-striped table-hover table-bordered align-middle table-users">
+            <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Rol</th>
+                <th>Naam</th>
+                <th class="text-center">Punten</th>
+                <th class="text-center user-info-cell">Info</th>
+                <th class="text-center action-cell">Actie</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (locals.users && users.length > 0) { %>
+                <% for (var i = 0 ; i < users.length ; i++ ) { %>
+                    <%
+                        let _user = users[i];
+                        let birthDate = _user.geboortedatum;
+                        let formattedBirthDate = tools.formattedDatetimeDate(birthDate);
+                        let formattedShortBirthDate = tools.formattedShortDate(birthDate);
+                        let lastActive = _user.lastactive;
+                        let formattedLastActive = (lastActive)
+                                ? tools.formattedDatetimeDate(lastActive)
+                                : undefined;
+                        let formattedShortLastActive = (lastActive)
+                                ? tools.formattedShortDate(lastActive)
+                                : undefined;
+                        let userRole = _user.rolnaam;
+                        let userRoleFirstLetterCap = (userRole) ? userRole : "Onbekend";
+                        if (userRole) {
+                            userRole = userRole.toLowerCase();
+                            userRoleFirstLetterCap = userRole[0].toUpperCase();
+                            if (userRole.length > 1) {
+                                userRoleFirstLetterCap += userRole.substring(1)
+                            }
+                        }
+                    %>
+                    <tr class="entity<% if (locals.currentUser && _user.username === currentUser.username) { %> bg-success-light<% } %>" data-order="<%= i %>">
+                        <th class="text-center">
+                            <input type="hidden" name="roleId[]" value="<%= _user.idrollen %>"
+                                   data-value-to-select="select[name=roleId]">
+                            <% if (userRole === 'admin') { %>
+                                <i class="fa fa-cog" data-toggle="tooltip"
+                                   data-title="<%= userRoleFirstLetterCap %>"></i>
+                            <% } else if (userRole === 'barman') { %>
+                                <i class="fas fa-wine-bottle" data-toggle="tooltip"
+                                   data-title="<%= userRoleFirstLetterCap %>"></i>
+                            <% } else if (userRole === 'gebruiker') { %>
+                                <i class="fa fa-user" data-toggle="tooltip"
+                                   data-title="<%= userRoleFirstLetterCap %>"></i>
+                            <% } else { %>
+                                <i class="fa fa-question text-danger" data-toggle="tooltip"
+                                   data-title="<%= userRoleFirstLetterCap %>"></i>
+                            <% } %>
+                        </th>
+                        <th>
+                            <% if (_user.username !== currentUser.username) { %>
+                                <input type="hidden" name="id[]" value="<%= _user.idusers %>">
+                                <input type="hidden" name="roleid[]" value="<%= _user.idusers %>">
+
+                            <a href="#" data-toggle="modal" data-target="#modal-edit-user" class="d-block edit-button"
+                               data-toggle="modal" data-target="#modal-edit-user">
+                                <% } %>
+                                <span class="username" data-html-to-html=".username"><%= _user.username %></span>
+                                <small class="name text-capitalize text-info d-block">
+                                    <span class="firstname" data-html-to-html=".firstname"><%= _user.voornaam %></span>
+                                    <span class="surname" data-html-to-html=".surname"><%= _user.familienaam %></span>
+                                </small>
+                                <time class="badge badge-info user-birth-date" datetime="<%= formattedBirthDate %>"
+                                      data-datetime="<%= birthDate.getTime() %>"><%= formattedShortBirthDate %></time>
+                                <% if (locals.currentUser && _user.username !== currentUser.username) { %>
+                            </a>
+                            <% } %>
+
+                        </th>
+                        <td class="text-center">
+                            <span class="badge badge-md badge-<% if (_user.punten === 0) { %>secondary<% } else { %>success<% } %> points"
+                                  data-html-to-value="#points"><%= _user.punten %></span>
+                        </td>
+                        <td>
+                            <small>
+                                <span class="text-uppercase">Laatst online:</span>
+                                <span class="badge badge-info user-birth-date">
+                                    <% if (lastActive) { %>
+                                        <time class="last-active" datetime="<%= formattedLastActive %>"
+                                              data-datetime="<%= lastActive.getTime() %>"><%= formattedShortLastActive %></time>
+                                    <% } else { %>
+                                        ?
+                                    <% } %>
+                                </span>
+                                <br>
+                                <span class="text-uppercase">Aantal bezoeken: </span>
+                                <span class="badge badge-md badge-fw badge-<% if (_user.visits === 0) { %>secondary<% } else { %>success<% } %> visits"><%= _user.visits %></span>
+                            </small>
+                        </td>
+                        <td>
+                            <% if (locals.currentUser && _user.username !== currentUser.username) { %>
+                                <a href="#" role="button" class="btn btn-sm btn-danger delete-button"
+                                   data-toggle="modal" data-target="#modal-delete-user" title="Verwijderen">
+                                    <i class="fa fa-fw fa-user-minus"></i></a>
+                                <a href="#" role="button" class="btn btn-sm btn-primary edit-button"
+                                   data-toggle="modal" data-target="#modal-edit-user">
+                                    <i class="fa fa-fw fa-user-edit"></i>
+                                    <span class="not-md">Wijzigen</span></a>
+                                <a href="#" role="button" class="btn btn-sm btn-primary edit-button"
+                                    data-toggle="modal" data-target="#modal-password-user">
+                                     <i class="fa fa-fw fa-user-shield"></i>
+                                     <span class="not-md">Wachtwoord resetten</span></a>    
+                            <% } %>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } %>
+            <tr class="empty-row<%if (locals.users && users.length > 0) { %> hidden<% } %>">
+                <td colspan="5">&ndash; Geen leden gevonden</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade dynamic-modal" id="modal-delete-user" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" class="modal-content" action="/Users/delete">
+                <input type="hidden" name="id">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">
+                        <i class="fa fa-user-minus"></i> Lid verwijderen
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-chevron-up"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Hiermee verwijdert u het lid
+                        <strong>
+                            <span class="username"></span>
+                            (<span class="firstname text-capitalize"></span>
+                            <span class="surname text-capitalize"></span>)
+                        </strong>. Deze actie is onomkeerbaar.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="fa fa-fw fa-user-minus"></i> Lid verwijderen
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-fw fa-times-circle"></i> Niet verwijderen
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade dynamic-modal" id="modal-password-user" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" class="modal-content" action="/resetPassword">
+                <input type="hidden" name="id">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title">
+                        <i class="fa fa-user-shield"></i> Wachtwoord lid resetten
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-chevron-up"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Hiermee reset u het wachtwoord van lid 
+                        <strong>
+                            <span class="username"></span>
+                            (<span class="firstname text-capitalize"></span>
+                            <span class="surname text-capitalize"></span>)
+                        </strong>naar het standaard wachtwoord. Deze actie is onomkeerbaar.
+                        Laat het lid dit wachtwoord zo snel mogelijk veranderen.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        <i class="fa fa-fw fa-user-shield"></i> Wachtwoord resetten
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-fw fa-times-circle"></i> Annuleren
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade dynamic-modal" id="modal-edit-user" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form method="post" class="modal-content" action="/Users/edit">
+                <input type="hidden" name="id">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title">
+                        <i class="fa fa-edit"></i> Lid wijzigen
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-chevron-up"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <legend>
+                            <span class="username"></span>
+                            <small class="text-info">(<span class="firstname text-capitalize"></span> <span class="surname text-capitalize"></span>)</small>
+                        </legend>
+
+                        <div class="form-row">
+                            <div class="col-sm-3 flex-label">
+                                <label for="points" class="badge badge-primary">Punten</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="number" id="points" name="points"
+                                       class="form-control"
+                                       placeholder="Punten" required="required" min="0">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="col-sm-3 flex-label">
+                                <label for="role" class="badge badge-primary">Rol</label>
+                            </div>
+                            <% if (locals.roles) { %>
+                            <div class="col-sm-9">
+                                <select id="role" name="roleId" class="form-control" title="Rol">
+                                    <% roles.forEach(function (role) { %>
+                                        <%
+                                            role.rolnaam = role.rolnaam.substring(0, 1).toUpperCase() + role.rolnaam.substr(1);
+                                        %>
+                                        <option value="<%= role.idrollen %>"
+                                                class="first-word-capitalize"><%= role.rolnaam %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <% } %>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-fw fa-times-circle"></i> Niet opslaan
+                    </button>
+                    <button type="submit" class="btn btn-info">
+                        <i class="fa fa-fw fa-save"></i> Opslaan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</article>
+
+<% include fragments/footer-with-tag.ejs %>
+
+<% include fragments/tail.ejs %>
+</body>
+
+</html>

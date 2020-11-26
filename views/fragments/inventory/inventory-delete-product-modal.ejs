@@ -1,0 +1,27 @@
+<div class="modal fade" id="modal-delete-product" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" class="modal-content" action="/Inventaris/delete">
+            <input type="hidden" name="id">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title">
+                    <i class="fa fa-trash"></i>
+                    <small>Product verwijderen</small>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-chevron-up"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hiermee verwijdert u het product. Deze actie is onomkeerbaar.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-danger">
+                    <i class="fa fa-fw fa-trash"></i> Product verwijderen
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fa fa-fw fa-times-circle"></i> Niet verwijderen
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

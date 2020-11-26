@@ -1,0 +1,61 @@
+<form action="/LogIn" method="post">
+    <fieldset>
+        <div class="form-row">
+            <div class="col">
+                <label for="username" class="badge badge-pctje">Gebruikersnaam</label>
+                <input type="text" id="username" name="username"
+                       class="form-control form-control-lg<% if (locals.error) { %> is-invalid<% } %>"
+                       placeholder="Gebruikersnaam" required="required">
+                <% if (locals.error) { %>
+                    <div class="invalid-feedback">
+                        <%= error %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="password" class="badge badge-pctje">Wachtwoord</label>
+                <input type="password" id="password" name="password" placeholder="Wachtwoord" required="required"
+                       class="form-control form-control-lg<% if (locals.error) { %> is-invalid<% } %>">
+            </div>
+        </div>
+
+        <br>
+
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" class="btn btn-pctje">
+                    <i class="fa fa-fw fa-sign-in-alt"></i> Aanmelden
+                </button>
+            </div>
+            <div class="col text-right"><a href="#" data-toggle="modal"
+                title="Wachtwoord vergeten?" data-target="#modal-forgot-password">Wachtwoord vergeten?</a></div>
+        </div>
+    </fieldset>
+</form>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-forgot-password">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Wachtwoord vergeten?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Indien je je wachtwoord vergeten bent, neem dan contact met een van de bestuursleden.</p>
+          <p>Zij kunnen je wachtwoord herstellen.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <i class="fa fa-fw fa-times-circle"></i> Sluiten
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
